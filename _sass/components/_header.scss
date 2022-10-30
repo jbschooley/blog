@@ -63,8 +63,12 @@
 .header__brand {
   @include flexbox();
   @include align-items(center);
-  & > svg {
-    width: map-get($base, font-size-h4) * 1.6;
+  & > .header__logo {
+    font-size: inherit;
+  }
+  & > svg, & > .header__logo > svg {
+    //width: map-get($base, font-size-h4) * 1.6;
+    width: auto;
     height: map-get($base, font-size-h4) * 1.6;
     margin-right: map-get($spacers, 3);
     vertical-align: middle;
