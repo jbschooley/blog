@@ -3,7 +3,8 @@
   a {
     font-weight: map-get($base, font-weight);
     text-decoration: none !important;
-    @include link-colors($header-text-color, $main-color-1);
+    //@include link-colors($header-text-color, $main-color-1);
+    @include link-colors($header-text-color, $header-selected-color);
   }
   .main {
     @include flexbox();
@@ -73,7 +74,8 @@
     margin-right: map-get($spacers, 3);
     vertical-align: middle;
     @include media-breakpoint-down(md) {
-      width: map-get($base, font-size-h4) * 1.2;
+      //width: map-get($base, font-size-h4) * 1.2;
+      width: auto;
       height: map-get($base, font-size-h4) * 1.2;
     }
   }
@@ -119,9 +121,9 @@
 }
 .navigation__item--active {
   a {
-    @include link-colors($main-color-1, $main-color-1);
+    @include link-colors($header-selected-color, $header-selected-color);
   }
   &::after {
-    @include split-line(bottom, 4px, $main-color-1);
+    @include split-line(bottom, 4px, $header-selected-color);
   }
 }
