@@ -8,10 +8,11 @@
     <div class="main">
       <div class="header__title">
         <div class="header__brand">
-<!--          {%- include svg/bitzero6white.svg -%}-->
-          <a class="header__logo" title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{%- include svg/bitzero6white.svg -%}</a>
           {%- assign _paths_root = site.paths.root | default: site.data.variables.default.paths.root  -%}
           {%- include snippets/get-nav-url.html path=_paths_root -%}
+<!--          {%- include svg/bitzero6white.svg -%}-->
+          <a class="header__logo" title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{%- include svg/bitzero6white.svg -%}</a>
+<!--          <a class="header__logo" title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{{ site.title }}</a>-->
 <!--          {%- if site.title -%}-->
 <!--            <a title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{{ site.title }}</a>-->
 <!--          {%- endif -%}-->
