@@ -1,3 +1,21 @@
 /* start custom scss snippet */
 
+.header.with-shadow {
+  box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+}
+
+.home__banner {
+  min-height: 60vh;
+  text-align: center;
+  .cover-heading {
+    color: #ffffff !important;
+    font-weight: 500;
+  }
+  .lead {
+    color: #ffffff !important;
+    font-size: 1.25rem;
+    font-weight: 300;
+  }
+}
+
 /* end custom scss snippet */
