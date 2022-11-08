@@ -12,12 +12,7 @@
         <div class="header__brand">
           {%- assign _paths_root = site.paths.root | default: site.data.variables.default.paths.root  -%}
           {%- include snippets/get-nav-url.html path=_paths_root -%}
-          <!--          {%- include svg/bitzero6white.svg -%}-->
           <a class="header__logo" title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{%- include svg/bitzero6white.svg -%}</a>
-          <!--          <a class="header__logo" title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{{ site.title }}</a>-->
-          <!--          {%- if site.title -%}-->
-          <!--            <a title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{{ site.title }}</a>-->
-          <!--          {%- endif -%}-->
         </div>
         {%- if site.search.provider -%}
         <button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button>
@@ -50,6 +45,39 @@
     <div class="home__banner">
       <h1 class="cover-heading">Hello!</h1>
       <h3 class="lead">I'm Jacob. I'm a software developer and cybersecurity student.</h3>
+      <div class="row">
+        <div class="column-md-6">
+          <p class="lead">Skills:</p>
+          <ul class="lead list">
+            <li>Python</li>
+            <li>AWS</li>
+            <li>GraphQL</li>
+            <li>DevOps</li>
+            <li>Linux</li>
+            <li>API security testing, reporting, and improvement</li>
+            <li>Threat detection, mitigation, and recovery</li>
+            <li>Full stack web design</li>
+            <li>Office 365 administration</li>
+            <li>and more...</li>
+          </ul>
+        </div>
+        <div class="column-md-6">
+          <p class="lead">Projects I've worked on:</p>
+          <a class="btn btn-lg btn-default project-logo" href="https://ourco.com" target="_blank">
+            <img src="assets/res/LogoOurco.webp" alt="Ourco">
+          </a>
+          <a class="btn btn-lg btn-default project-logo" href="https://byurideboard.com" target="_blank">
+            <img src="assets/res/LogoBYURideBoard.webp" alt="BYU Ride Board">
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="btn-group">
+          <a href="contact.html" class="btn btn-lg btn-default">send me an email</a>
+          <a href="https://www.linkedin.com/in/jbschooley/" target="_blank" class="btn btn-lg btn-default">check out my linkedin</a>
+          <a href="#content" class="btn btn-lg btn-default">read my blog &#11015;&#65039;</a>
+        </div>
+      </div>
     </div>
     {%- endif -%}
   </header>

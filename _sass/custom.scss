@@ -5,8 +5,11 @@
 }
 
 .home__banner {
-  min-height: 60vh;
+  //min-height: 60vh;
   text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 800px;
   .cover-heading {
     color: #ffffff !important;
     font-weight: 500;
@@ -16,6 +19,97 @@
     font-size: 1.25rem;
     font-weight: 300;
   }
+  .list {
+    max-width: max-content;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    list-style-type: "-  ";
+    padding-left: 2rem;
+  }
+  .row {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1rem !important;
+  }
+  .row:last-child {
+    padding-bottom: 1.5rem;
+  }
+  .column-md-6 {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 50%;
+  }
+  img {
+    width: 100%;
+  }
+  .btn-lg {
+    padding: 10px 20px;
+    font-weight: bold;
+    margin: 0.3rem;
+    border-radius: 0.8rem;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,255,255,0);
+    color: #333 !important;
+    font-size: 1.25rem;
+  }
+  .btn-lg:focus, .btn-lg:hover {
+    background: #ffffff;
+  }
+  .project-logo {
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,255,255,0);
+    min-height: 110px;
+    display: flex;
+  }
+  .project-logo img {
+    margin: auto;
+    width: auto;
+    max-width: 100%;
+    max-height: 80px;
+  }
+  .btn-group {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+
+    // Prevent double borders when buttons are next to each other
+    > .btn:not(:first-child),
+    > .btn-group:not(:first-child) {
+      margin-left: -1px;
+    }
+
+    // Reset rounded corners
+    > .btn:not(:last-child):not(.dropdown-toggle),
+    > .btn-group:not(:last-child) > .btn {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    // The left radius should be 0 if the button is:
+    // - the "third or more" child
+    // - the second child and the previous element isn't `.btn-check` (making it the first child visually)
+    // - part of a btn-group which isn't the first child
+    > .btn:nth-child(n + 3),
+    > :not(.btn-check) + .btn,
+    > .btn-group:not(:first-child) > .btn {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
+.home__content {
+  margin-top: 1.5rem;
+}
+
+#email-form {
+  width: 100%;
+  min-height: 960px;
+  border: 0;
 }
 
 /* end custom scss snippet */

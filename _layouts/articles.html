@@ -33,7 +33,11 @@ layout: page
 
 {%- if _articles -%}
 
+  {%- if page.show_home_banner -%}
+  <div class="layout--articles home__content">
+  {%- else -%}
   <div class="layout--articles">
+  {%- endif -%}
 
     {%- if _type == 'grid' -%}
       {%- if page.articles.size == 'sm' -%}
