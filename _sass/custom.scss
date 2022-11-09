@@ -112,4 +112,40 @@
   border: 0;
 }
 
+.navigation {
+  .button--svg {
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+}
+
+.button--secondary, .button--secondary:visited {
+  background-color: inherit;
+}
+
+a, a:link, a:visited {
+  &.button--secondary {
+    background: none;
+  }
+}
+
+.button--svg {
+  padding: 0;
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+.header__title {
+  & > .button--svg {
+    display: none;
+    margin-left: 0.5rem;
+    @include media-breakpoint-down(md) {
+      @include flexbox();
+    }
+  }
+}
+
 /* end custom scss snippet */

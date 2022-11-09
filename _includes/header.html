@@ -14,6 +14,8 @@
           {%- include snippets/get-nav-url.html path=_paths_root -%}
           <a class="header__logo" title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{%- include svg/bitzero6white.svg -%}</a>
         </div>
+        <a class="button button--secondary button--circle button--svg" target="_blank" href="https://www.linkedin.com/in/jbschooley/">{%- include svg/linkedin.svg -%}</a>
+        <a class="button button--secondary button--circle button--svg" target="_blank" href="https://github.com/jbschooley">{%- include svg/github.svg -%}</a>
         {%- if site.search.provider -%}
         <button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button>
         {%- endif -%}
@@ -33,6 +35,9 @@
           <li class="navigation__item"><a href="{{ _nav_url }}">{%- if _item.title -%}{{ _item.title }}{%- else -%}{{ __return }}{%- endif -%}</a></li>
           {%- endif -%}
           {%- endfor -%}
+          {% comment %}<button class="button button--secondary button--circle"><i class="fa-brands fa-linkedin"></i></button>{% endcomment %}
+          <li><a class="button button--secondary button--circle button--svg" target="_blank" href="https://www.linkedin.com/in/jbschooley/">{%- include svg/linkedin.svg -%}</a></li>
+          <li><a class="button button--secondary button--circle button--svg" target="_blank" href="https://github.com/jbschooley">{%- include svg/github.svg -%}</a></li>
           {%- if site.search.provider -%}
           <li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li>
           {%- endif -%}
@@ -75,7 +80,7 @@
         <div class="btn-group">
           <a href="contact.html" class="btn btn-lg btn-default">send me an email</a>
           <a href="https://www.linkedin.com/in/jbschooley/" target="_blank" class="btn btn-lg btn-default">check out my linkedin</a>
-          <a href="#content" class="btn btn-lg btn-default">read my blog &#11015;&#65039;</a>
+          {% comment %}<a href="#content" class="btn btn-lg btn-default">read my blog &#11015;&#65039;</a>{% endcomment %}
         </div>
       </div>
     </div>
