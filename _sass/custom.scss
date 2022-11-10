@@ -130,6 +130,13 @@
 
 .home__content {
   margin-top: 1.5rem;
+  .item__content {
+    header {
+      a:focus, a:hover {
+        text-decoration: none;
+      }
+    }
+  }
 }
 
 #email-form {
