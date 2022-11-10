@@ -1,7 +1,14 @@
 /* start custom scss snippet */
 
-.header.with-shadow {
-  box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+.header {
+  a, a:link, a:visited {
+    &.button--secondary {
+      background: none;
+    }
+  }
+  &.with-shadow {
+    box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+  }
 }
 
 .home__banner {
@@ -33,15 +40,34 @@
     flex-direction: row;
     justify-content: center;
     margin-top: 1rem !important;
+    &:last-child {
+      padding-bottom: 1.5rem;
+    }
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
   }
-  .row:last-child {
-    padding-bottom: 1.5rem;
+  & > * {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  .column {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    flex: 1;
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
   }
   .column-md-6 {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
     width: 50%;
+    @include media-breakpoint-down(md) {
+      width: 100%;
+    }
   }
   img {
     width: 100%;
@@ -55,21 +81,21 @@
     border: 1px solid rgba(255,255,255,0);
     color: #333 !important;
     font-size: 1.25rem;
-  }
-  .btn-lg:focus, .btn-lg:hover {
-    background: #ffffff;
+    &:focus, &:hover {
+      background: #ffffff;
+    }
   }
   .project-logo {
     background: rgba(255,255,255,0.9);
     border: 1px solid rgba(255,255,255,0);
     min-height: 110px;
     display: flex;
-  }
-  .project-logo img {
-    margin: auto;
-    width: auto;
-    max-width: 100%;
-    max-height: 80px;
+    img {
+      margin: auto;
+      width: auto;
+      max-width: 100%;
+      max-height: 80px;
+    }
   }
   .btn-group {
     position: relative;
@@ -124,12 +150,6 @@
   background-color: inherit;
 }
 
-a, a:link, a:visited {
-  &.button--secondary {
-    background: none;
-  }
-}
-
 .button--svg {
   padding: 0;
   svg {
@@ -145,6 +165,45 @@ a, a:link, a:visited {
     @include media-breakpoint-down(md) {
       @include flexbox();
     }
+  }
+}
+
+// parallax shadow
+.parallax-shadow {
+  .page__main-inner {
+    background-color: #081a66;
+    background-size: cover;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+  }
+  .header {
+    background: none;
+    .with-shadow {
+      box-shadow: none;
+    }
+  }
+  .footer {
+    background: none;
+  }
+  .page__content {
+    background: white;
+  }
+}
+
+.tag-button-light {
+  background-color: #d3d3d394;
+  color: #081a66;
+}
+
+.site-tags {
+  .tag-button {
+    @include clickable($main-color-3, $light-gray-background, default, default, $text-color-2,$main-color-2, $text-color-2,$main-color-2);
+  }
+}
+
+.article__info {
+  .button--secondary, button--secondary:visited {
+    background-color: $light-gray-background;
+    color: $main-color-2;
   }
 }
 

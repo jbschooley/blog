@@ -2,8 +2,8 @@
   <header class="header header--dark" {%- if include.background -%} style="background: {{ include.background }};" {%- endif -%}>
 {%- elsif include.theme == 'light' -%}
   <header class="header header--light" {%- if include.background -%} style="background: {{ include.background }};" {%- endif -%}>
-{%- elsif page.show_home_banner -%}
-  <header class="header with-shadow" {%- if include.background -%} style="background: {{ include.background }};" {%- endif -%}>
+{% comment %}{%- elsif page.show_home_banner -%}{% endcomment %}
+  {% comment %}<header class="header with-shadow" {%- if include.background -%} style="background: {{ include.background }};" {%- endif -%}>{% endcomment %}
 {%- else -%}
   <header class="header" {%- if include.background -%} style="background: {{ include.background }};" {%- endif -%}>
 {%- endif -%}
@@ -51,7 +51,7 @@
       <h1 class="cover-heading">Hello!</h1>
       <h3 class="lead">I'm Jacob. I'm a software developer and cybersecurity student.</h3>
       <div class="row">
-        <div class="column-md-6">
+        <div class="column column-md-6">
           <p class="lead">Skills:</p>
           <ul class="lead list">
             <li>Python</li>
@@ -66,7 +66,7 @@
             <li>and more...</li>
           </ul>
         </div>
-        <div class="column-md-6">
+        <div class="column column-md-6">
           <p class="lead">Projects I've worked on:</p>
           <a class="btn btn-lg btn-default project-logo" href="https://ourco.com" target="_blank">
             <img src="assets/res/LogoOurco.webp" alt="Ourco">

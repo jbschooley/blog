@@ -1,6 +1,9 @@
 ---
 title: Post with Header Image
-tags: TeXt
+tags:
+  - TeXt
+  - testing
+  - multi word tag
 article_header:
   type: cover
   image:
