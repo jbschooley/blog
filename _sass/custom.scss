@@ -14,9 +14,7 @@
 .home__banner {
   //min-height: 60vh;
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 800px;
+  flex-direction: column;
   .cover-heading {
     color: #ffffff !important;
     font-weight: 500;
@@ -34,6 +32,9 @@
     list-style-type: "-  ";
     padding-left: 2rem;
   }
+  .left-align {
+    text-align: left;
+  }
   .row {
     display: flex;
     flex-wrap: nowrap;
@@ -47,10 +48,10 @@
       flex-direction: column;
     }
   }
-  & > * {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
+  //& > * {
+  //  margin-left: 1rem;
+  //  margin-right: 1rem;
+  //}
   .column {
     display: flex;
     flex-wrap: nowrap;
