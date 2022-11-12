@@ -25,10 +25,10 @@ header:
       # @end locale config
     url: /archive.html
 
-  - titles:
-      en: &EN       Contact
-      en-GB: *EN
-      en-US: *EN
-      en-CA: *EN
-      en-AU: *EN
-    url: /contact.html
+#  - titles:
+#      en: &EN       Contact
+#      en-GB: *EN
+#      en-US: *EN
+#      en-CA: *EN
+#      en-AU: *EN
+#    url: /contact.html

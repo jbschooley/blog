@@ -65,7 +65,7 @@ paths:
   root    : # title link url, "/" (default)
   home    : # home layout url, "/" (default)
   archive : # "/archive.html" (default)
-  contact:  /contact.html
+#  contact:  /contact.html
   rss     : # "/feed.xml" (default)
 
 
@@ -110,7 +110,7 @@ sources: unpkg
 ## => Sharing
 ##############################
 sharing:
-  provider: false # false (default), "addtoany", "addthis", "custom"
+  provider: addtoany # false (default), "addtoany", "addthis", "custom"
 
   ## AddThis
   addthis:
