@@ -14,6 +14,8 @@
           {%- include snippets/get-nav-url.html path=_paths_root -%}
           <a class="header__logo" title="{%- if site.description -%}{{ site.description }}{%- endif -%}" href="{{ __return }}">{%- include svg/bitzero6white.svg -%}</a>
         </div>
+        {%- include snippets/get-nav-url.html path="/contact.html" -%}
+        <a class="button button--secondary button--circle button--svg" href="{{ __return }}">{%- include svg/envelope-solid.svg -%}</a>
         <a class="button button--secondary button--circle button--svg" target="_blank" href="https://www.linkedin.com/in/jbschooley/">{%- include svg/linkedin.svg -%}</a>
         <a class="button button--secondary button--circle button--svg" target="_blank" href="https://github.com/jbschooley">{%- include svg/github.svg -%}</a>
         {%- if site.search.provider -%}
@@ -36,6 +38,8 @@
           {%- endif -%}
           {%- endfor -%}
           {% comment %}<button class="button button--secondary button--circle"><i class="fa-brands fa-linkedin"></i></button>{% endcomment %}
+          {%- include snippets/get-nav-url.html path="/contact.html" -%}
+          <li><a class="button button--secondary button--circle button--svg" href="{{ __return }}">{%- include svg/envelope-solid.svg -%}</a></li>
           <li><a class="button button--secondary button--circle button--svg" target="_blank" href="https://www.linkedin.com/in/jbschooley/">{%- include svg/linkedin.svg -%}</a></li>
           <li><a class="button button--secondary button--circle button--svg" target="_blank" href="https://github.com/jbschooley">{%- include svg/github.svg -%}</a></li>
           {%- if site.search.provider -%}
