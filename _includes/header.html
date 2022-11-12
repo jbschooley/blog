@@ -22,7 +22,6 @@
         <button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button>
         {%- endif -%}
       </div>
-      {%- if site.data.navigation.header -%}
       <nav class="navigation">
         <ul>
           {%- for _item in site.data.navigation.header -%}
@@ -47,7 +46,6 @@
           {%- endif -%}
         </ul>
       </nav>
-      {%- endif -%}
     </div>
 
     {%- if page.show_home_banner and paginator.page == 1 -%}

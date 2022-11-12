@@ -16,13 +16,23 @@
 }
 
 .footer {
-  .footer-links {
-    text-align: center;
-  }
   a {
     @include link-colors($footer-text-color, $footer-selected-color);
-    font-weight: map-get($base, font-weight);
     text-decoration: none !important;
+  }
+  .footer-links {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    a {
+      font-weight: map-get($base, font-weight);
+      height: auto;
+      display: flex;
+    }
   }
 }
 
@@ -158,10 +168,8 @@
 }
 
 .navigation {
-  .button--svg {
-    @include media-breakpoint-down(md) {
-      display: none;
-    }
+  @include media-breakpoint-down(md) {
+    display: none;
   }
 }
 

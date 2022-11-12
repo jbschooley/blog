@@ -10,7 +10,12 @@
     {%- endif -%}
 
     <div class="footer-links">
-      <a href="#">Archive</a>
+      {%- include snippets/get-nav-url.html path="/archive.html" -%}
+      <a href="{{ __return }}">Archive</a>
+      {%- assign _paths_rss = site.paths.rss | default: site.data.variables.default.paths.rss -%}
+      {% comment %}<div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="{{ _paths_rss }}">Subscribe</a></div>{% endcomment %}
+      <a type="application/rss+xml" href="{{ _paths_rss }}">Subscribe</a>
+      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
     </div>
     {%- include snippets/get-locale-string.html key='COPYRIGHT_DATES' -%}
     {%- assign _locale_copyright_dates = __return -%}
@@ -18,9 +23,9 @@
       <div>
         {%- include snippets/get-locale-string.html key='COPYRIGHT_DATES' -%}
         {%- assign _locale_copyright_dates = __return -%}
-        © {{ site.title }} {{ _locale_copyright_dates }},
+        © {{ site.org_title }} {{ _locale_copyright_dates }} -
         Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/">Jekyll</a> & <a
-        title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme">TeXt Theme</a>.
+        title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme">TeXt Theme</a>
       </div>
     </div>
   </div>

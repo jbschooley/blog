@@ -20,7 +20,8 @@ text_skin: darkblue # "default" (default), "dark", "forest", "ocean", "chocolate
 highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 url     : https://jbschooley.github.io # the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl : # does not include hostname
-title   : Bitzero
+title   : Bitzero Blog
+org_title: Bitzero Technology LLC
 description: > # this means to ignore newlines until "Language & timezone"
   Your Site Description
 
@@ -35,10 +36,10 @@ timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for
 ##############################
 author:
   type      : # "person" (default), "organization"
-  name      : Your Name
+  name      : Jacob Schooley
   url       :
   avatar    : # path or url of avatar image (square)
-  bio       : I am an amazing person.
+  bio       : Cybersecurity student and devops engineer
   email     :
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
   twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
@@ -75,7 +76,7 @@ paths:
 excerpt_separator: <!--more-->
 
 ## license
-license: CC-BY-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-ND-4.0"
+license: CC-BY-SA-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-ND-4.0"
 
 ## TOC
 toc:
@@ -210,11 +211,11 @@ defaults:
     values:
       layout: article
       sharing: true
-      license: true
+      license: false
 #      aside:
 #        toc: true
       show_edit_on_github: false
-      show_subscribe: true
+      show_subscribe: false
       pageview: true
 
 
