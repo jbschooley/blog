@@ -46,7 +46,7 @@
       {%- endif -%}
     </div>
 
-    {%- if page.show_home_banner -%}
+    {%- if page.show_home_banner and paginator.page == 1 -%}
     <div class="main home__banner">
       <h1 class="cover-heading">Hello!</h1>
       <h3 class="lead">I'm Jacob. I'm a software developer and cybersecurity student.</h3>
