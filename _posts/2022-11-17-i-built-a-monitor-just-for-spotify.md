@@ -39,6 +39,8 @@ Definitely not your typical monitor chassis. But it didn't take too long and was
 
 It took 4 prints and revisions to come up with a case that would fit the screen and not fall apart while being printed. Every time I paid for a print, waited 12+ hours, and then realized it wouldn't fit right, I was reminded why I chose a career in software.
 
+If you want to print one yourself (or redesign it), you can download the files [here](https://github.com/jbschooley/SpotifyMonitor/tree/main/Case). Good luck!
+
 ### The Insides
 
 The HDMI board has a pin for controlling brightness. Brightness is high at 3.3 V and low when grounded. The waveshare wiki instructions say brightness can be controlled via PWM, but I found that a potentiometer works just fine (and DC brightness control is better on the eyes).
@@ -59,7 +61,7 @@ For the Spotify interface, I simply modified the Spotify web player. They alread
 
 [Mini Player for Spotify](https://chrome.google.com/webstore/detail/mini-player-for-spotify/mjjeebakniihklfggnacbigighgildlo?hl=en) is a Chrome extension that adds some CSS to the Spotify player to get rid of the unnecessary stuff.
 
-[This tampermonkey script]() further adjusts the CSS (and some JS to fix low resolution album art) to make it look even better.
+[This tampermonkey script](https://github.com/jbschooley/SpotifyMonitor/blob/main/SpotifyCSS.js) further adjusts the CSS (and some JS to fix low resolution album art) to make it look even better.
 
 A desktop shortcut with this target to open it in full screen:
 ```
