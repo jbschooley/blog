@@ -1,12 +1,12 @@
 ---
 title: I Built a Monitor Just For Spotify
-excerpt: Because one that worked the way I wanted didn't exist.
+excerpt: Because one that worked the way I wanted didn't exist, I designed, 3D printed, and built a monitor to show what I'm listening to.
 tags:
   - hardware
   - music
   - personal projects
 image:
-  path: /assets/images/2022-11-17-i-built-a-monitor-just-for-spotify/interface.jpg
+  path: /assets/images/2022-11-17-i-built-a-monitor-just-for-spotify/monitor.jpg
   width: 1200
   height: 630
 ---
@@ -71,7 +71,7 @@ slimjet.exe -kiosk https://open.spotify.com
 
 And this is what it looks like:
 
-![interface](/assets/images/2022-11-17-i-built-a-monitor-just-for-spotify/interface.jpg)
+![interface](/assets/images/2022-11-17-i-built-a-monitor-just-for-spotify/monitor.jpg)
 
 Honestly, I think it looks pretty good.
 
