@@ -4,6 +4,10 @@ tags:
   - hardware
   - music
   - personal projects
+image:
+  path: /assets/images/2022-11-17-i-built-a-monitor-just-for-spotify/interface.jpg
+  width: 1200
+  height: 630
 ---
 
 I love music. I listen to music constantly, whether I’m working or doing homework or goofing off. I also really like knowing what I’m listening to at all times, as I spend much of my time listening to other people’s playlists and Spotify radio/auto-generated playlists. Bonus points if it’s easy to skip through a bunch of songs quickly for those times when I’m feeling a specific type of song but not quite sure exactly which one.
@@ -11,7 +15,7 @@ I love music. I listen to music constantly, whether I’m working or doing homew
 
 I was particularly intrigued by Spotify’s [Car Thing](https://carthing.spotify.com/). I didn’t need one for my car because I use CarPlay and its dashboard works great. For my office, though, it looked like it could be useful. I have 2 monitors and use all the screen space I have available for work. MusicBee and the Pandora app I used years ago allow me to minimize the player into a tiny window that just shows the album art and track name with player controls, but Spotify does not. A big ol' window to show what I’m listening to on Spotify takes up too much screen real estate.
 
-![spotify car thing](/assets/images/2022-11-17-i-built-a-monitor-just-for-spotify/carthing.png)
+![spotify car thing](/assets/images/2022-11-17-i-built-a-monitor-just-for-spotify/carthing.jpg)
 
 So I bought one. Unfortunately, it turns out, the firmware it ships with will not allow it to connect to a PC. It was designed to connect only to the Spotify app on a phone. I didn’t like that because it would either drain my phone’s battery or would require me to set up a spare phone just for interfacing with that screen. I gave up and sold it.
 
