@@ -1,5 +1,6 @@
 ---
 title: I Built a Monitor Just For Spotify
+author: Jacob Schooley
 excerpt: Because one that worked the way I wanted didn't exist, I designed, 3D printed, and built a monitor to show what I'm listening to.
 tags:
   - hardware
