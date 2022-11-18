@@ -18,10 +18,10 @@
 ##############################
 text_skin: darkblue # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
-url     : https://jbschooley.github.io # the base hostname & protocol for your site e.g. https://www.someone.com
+url     : https://bitzero.tech # the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl : # does not include hostname
 title   : Bitzero Blog
-org_title: Bitzero Technology LLC
+org_title: Jacob Schooley / Bitzero Technology LLC
 description: > # this means to ignore newlines until "Language & timezone"
   Your Site Description
 
