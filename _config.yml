@@ -23,7 +23,7 @@ baseurl : # does not include hostname
 title   : Bitzero Blog
 org_title: Jacob Schooley / Bitzero Technology LLC
 description: > # this means to ignore newlines until "Language & timezone"
-  Your Site Description
+  I'm Jacob. I'm a software developer and cybersecurity student.
 
 
 ## => Language and Timezone

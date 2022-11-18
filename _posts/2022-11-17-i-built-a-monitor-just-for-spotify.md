@@ -1,5 +1,6 @@
 ---
 title: I Built a Monitor Just For Spotify
+excerpt: Because one that worked the way I wanted didn't exist.
 tags:
   - hardware
   - music
