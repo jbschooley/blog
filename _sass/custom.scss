@@ -241,6 +241,41 @@ body {
   }
 }
 
+code {
+  font-size: 0.8em !important;
+  //font-family: Fira Code, monospace;
+}
+
+.image-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  //margin: 0 -0.5rem;
+  flex-direction: row;
+  gap: 1rem;
+  img {
+    //margin: 0.5rem;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    object-fit: cover;
+  }
+}
+
+.article__content {
+  font-size: 18px;
+  h3 {
+    font-size: 1.5em;
+  }
+  h4 {
+    font-size: 1.2em;
+  }
+  a, a:link, a:visited {
+    color: $text-color;
+    text-decoration: underline;
+    font-weight: inherit;
+  }
+}
 
 
 /* end custom scss snippet */

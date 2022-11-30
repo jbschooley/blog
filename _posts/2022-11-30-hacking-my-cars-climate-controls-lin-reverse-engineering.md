@@ -7,9 +7,9 @@ tags:
   - hardware
   - personal projects
 image:
-  path: /assets/images/2022-11-17-i-built-a-monitor-just-for-spotify/monitor.jpg
-  width: 1200
-  height: 630
+  path: /assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/lin_connected_to_computer.jpg
+  width: 3024
+  height: 4032
 ---
 
 It's not a great feeling to walk out to your car in the morning and find that your windshield is completely covered in ice. Scraping it off is a pain, and it's even worse when you're in a hurry.
@@ -18,7 +18,7 @@ I used to drive a 20-year-old Honda Accord. It had a barebones climate control s
 
 Not so in newer cars. My current car, a 5th generation Toyota RAV4, won't keep the front or rear defrosters on after restarting the car. I installed a remote start system, but without being able to keep the defroster on, it's not very useful. I could just as easily start the car myself and then turn on the defroster, but that would require me to go outside earlier than I want to.
 
-I've been told this is a safety feature (and common on many newer cars, not just my Toyota). However, according to [Toyota's website](https://support.toyota.com/s/article/Can-I-control-the-AC-10212?language=en_US), when you remote start the car, "if the outside temperature is less than 41°F, the front and rear defrosters will turn on." Ah, so you _can_ remotely defrost the windshield—if you bought a trim level that comes with Toyota's remote start subscription service. I didn't.
+I've been told this is a safety feature (and common on many newer cars, not just my Toyota). However, according to [Toyota's website](https://support.toyota.com/s/article/Can-I-control-the-AC-10212?language=en_US), when you remote start the car, "if the outside temperature is less than 41°F, the front and rear defrosters will turn on." Ah, so you _can_ remotely defrost the windshield—if you bought a trim level that comes with Toyota's remote start subscription service. I didn't. (I did want the larger display though, so [I bought and installed one from a junkyard Corolla](https://www.rav4world.com/threads/cheap-audio-plus-8-display-upgrade-with-corolla-radio.322164/#post-2962820).)
 
 So I've been thinking about how I could hack my car's climate control system to keep the defroster on after restarting the car.
 
@@ -40,17 +40,32 @@ I started looking for other ways to control the climate system. Studying the wir
 
 LIN is a serial bus that uses a single wire to carry data. It is different from CAN in that it is a single-master bus, meaning that only one device can transmit data at a time. The master node sends data to up to 16 slave nodes, and the slave devices can respond to requests sent by the master. [More information about LIN can be found here](https://www.csselectronics.com/pages/lin-bus-protocol-intro-basics).
 
-Because LIN is much newer than CAN, well-documented hardware is scarce and open-source utilities for sniffing and intercepting traffic are practically nonexistent. I decided to start by reverse engineering the LIN data transmitted between the control panel and the climate control unit. This was a lot easier than I expected. A [LIN bus transciever with a TJA1020 chip](https://www.amazon.com/dp/B0895WQ5VM) converts LIN data to TTL serial data, which can be read by a [USB-to-UART adapter](https://www.amazon.com/dp/B00LODGRV8. I ordered one and connected it to my computer, with the LIN terminal connected to the bus alongside both the car and the panel.
+<div class="image-row">
+  <img src="/assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/connector_car_pinout.jpg" alt="car connector" />
+  <img src="/assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/connector_panel_pinout.jpg" alt="panel connector" />
+</div>
+
+| Circle color | Wire color  | Description  |
+|--------------|-------------|--------------|
+| Green        | Green       | LIN          |
+| Yellow       | White/Black | 12V          |
+| White        | White       | Ground       |
+| Blue         | Blue        | Illumination |
+
+Because LIN is much newer than CAN, well-documented hardware is scarce and open-source utilities for sniffing and intercepting traffic are practically nonexistent. I decided to start by reverse engineering the LIN data transmitted between the control panel and the climate control unit. This was a lot easier than I expected. A [LIN bus transciever with a TJA1020 chip](https://www.amazon.com/dp/B0895WQ5VM) converts LIN data to TTL serial data, which can be read by a [USB-to-UART adapter](https://www.amazon.com/dp/B00LODGRV8. I ordered one and connected it to my computer, with the LIN terminal connected to the bus alongside both the car and the panel. (It's a mess, but a functional mess.)
+
+![LIN bus connected to computer](/assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/lin_connected_to_computer.jpg)
 
 Opening a serial connection using PuTTY gave me this:
-![img_1.png](img_1.png)
+![putty serial output](/assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/putty_serial_output.png)
 
 Looks ugly, but there's a pattern. A hex editor was a bit more useful. This sequence of bytes was repeated over and over:
 ```
 55 B1 00 40 00 00 38 38 00 00 9D 00 55 32 00 00 00 00 38 38 00 00 5D 00 55 39 40 00 00 00 10 90 00 00 E5 00 55 BA 00 00 00 00 00 00 00 00 45 00 55 F5 00 00 00 00 38 00 00 00 D1 00 55 76 00 55 78 90 00 00 00 00 00 00 00 F6 00
 ```
 
-A LIN frame begins with a sync byte, followed by a 6-bit ID, a 2-bit parity bit, and then 8 data bytes. The transciever returns `0x55` to represent the sync byte and `0x00` at the end of the frame. Separating the frames gives us this:
+A LIN frame begins with a sync byte, followed by a 6-bit ID, a 2-bit parity bit, 8 data bytes, and a 1-byte checksum. The transceiver returns `0x55` to represent the sync byte and `0x00` at the end of the frame. Separating the frames gives us this:
+
 ```
 55 B1 00 40 00 00 38 38 00 00 9D 00
 55 32 00 00 00 00 38 38 00 00 5D 00
@@ -62,6 +77,7 @@ A LIN frame begins with a sync byte, followed by a 6-bit ID, a 2-bit parity bit,
 ```
 
 Disconnecting the control panel from the bus changed the output:
+
 ```
 55 B1 00 40 00 00 38 38 00 00 9D 00
 55 32 00 00 00 00 38 38 00 00 5D 00
@@ -85,7 +101,7 @@ Frames with the ID `0xB1` contain the current status of the climate system.
     <tr>
       <th>Function</th>
       <th>Status</th>
-      <th>Frame</th>
+      <th>Data (8 bytes + checksum)</th>
       <th>Bits (excluding checksum)</th>
     </tr>
   </thead>
@@ -271,5 +287,47 @@ During my testing, `0x32`, `0xBA`, `0xF5`, and `0x78` messages never changed, so
 
 `0x76` is still a mystery, as it is continually requested by the master node and never receives a response. Remember how I mentioned some cars, like the newest generation Venza and Highlander with the 12 inch display, can control the climate system from the touchscreen? They might use CAN, or they might be connected to the climate LIN bus and respond to `0x76` requests. I tried responding to `0x76` requests with the same data as `0x39` and nothing happened. I also tried sending messages with 1 bit changed at a time (`0x0000000000000001`, `0x0000000000000002`, `0x0000000000000004` etc.) and observed no changes.
 
+### Sending LIN Data
+
+Because the TJA1020 transceiver operates as a slave node, it can respond to requests sent by the master. Responses, as with data sent by the master, must end with a [checksum byte](https://onlinedocs.microchip.com/pr/GUID-FA73463A-EB90-493D-A558-196E2EA36553-en-US-1/index.html?GUID-E40384CE-AADE-42A4-B529-F5522A91CAF8). A Python script can be used to listen for requests and transmit responses.
+
+```python
+import serial
+
+ser = serial.Serial(
+  port='COM9', # the serial port of the UART to USB adapter
+  baudrate=19200,
+  parity=serial.PARITY_NONE,
+  stopbits=serial.STOPBITS_ONE,
+  bytesize=serial.EIGHTBITS,
+  timeout=None
+)
+
+def calculate_checksum(frame_id, bytes_data):
+  checksum = frame_id
+  for b in bytes_data:
+    checksum += b
+    if checksum > 255:
+      checksum -= 255
+  checksum = ~checksum & 0xFF  # invert; & 0xFF is unnecessary in C when using uint8_t
+  return checksum.to_bytes(1, 'big', signed=False)
+
+def respond():
+  increase_fan_speed = b'\x40\x3c\x00\x00\x10\x90\x00\x00'
+  while 1:
+    b = ser.read()
+    if b.hex() == '55':
+      b = ser.read()
+      if b.hex() == '39':
+        ser.write(increase_fan_speed + calculate_checksum(0x39, increase_fan_speed))
+```
+
+Running this script will tell the car that the fan up button is being held down, causing the fan speed to increase. However, the control panel must be unplugged from the car for this to work. If the control panel is plugged in, both nodes will be transmitting responses at the same time, resulting in a collision. The car sees this as invalid data and ignores it.
+
+Operating as a master node is a bit more complex. To start, most LIN chips require another resistor placed between two pins or something of the sort to enable them to transmit in master mode. When I tried sending messages to the panel as a master, nothing happened. I think Python with the USB-UART adapter might just be too slow to send messages fast enough to be recognized by the transceiver as a single message. SoftwareSerial on an Arduino also did not send messages quickly enough. I was finally able to get it to work with an Arduino Mega, which has 3 hardware serial interfaces in addition to its USB serial interface. More detail on this will have to wait for another post.
+
 ### Next Steps
 
+My goal is to send messages to turn on the defrosters if they were on before shutting off the car. This is going to require building an interceptor with 2 LIN transceivers, one to act as a slave on the car's network and another to act as a master for the panel. I bought some parts to build a prototype, but turning this into something that reliably works in my car is going to take a while.
+
+![prototype LIN interceptor](/assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/prototype_interceptor.jpg)
