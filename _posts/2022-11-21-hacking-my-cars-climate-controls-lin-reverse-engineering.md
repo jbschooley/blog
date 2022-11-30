@@ -76,43 +76,164 @@ Disconnecting the control panel from the bus changed the output:
 
 Immediately we can determine that `0xB1`, `0x32`, and `0xF5` are frames of data sent by the master node (the climate control unit) to the slave node (the control panel). `0x39`, `0xBA`, and `0x78` are requests, which are responded to by the control panel. I have no clue what `0x76` is. To figure out which frames do what, I simply pressed buttons and observed the changes in the data.
 
-#### Status
+#### Status Messages
 
 Frames with the ID `0xB1` contain the current status of the climate system.
 
-| Function        | frame                                                | Bits (after   removing checksum) |
-|-----------------|------------------------------------------------------|----------------------------------|
-| power (fan bit) | off `80 00 22 00 38 38 00 80 ba`                     | >>   0x30 & 7                    |
-|                 | on  `80 23 13 00 2c 2c 00 81 bd`                     |                                  |
-| auto            | off <code>80 03 13 00 2c 2c 00 81 dd</code>          | >> 0x35 & 1                      |
-|                 | on  <code>80 23 13 00 2c 2c 00 81 bd</code>          |                                  |
-| fan             | 1. <code>80 01 13 00 2c 2c 00 81 df</code>           | >> 0x30 & 7                      |
-|                 | 2. <code>80 02 13 00 2c 2c 00 81 de</code>           |                                  |
-|                 | 3. <code>80 03 13 00 2c 2c 00 81 dd</code>           |                                  |
-|                 | 4. <code>80 04 13 00 2c 2c 00 81 dc</code>           |                                  |
-|                 | 5. <code>80 05 13 00 2c 2c 00 81 db</code>           |                                  |
-|                 | 6. <code>80 06 13 00 2c 2c 00 81 da</code>           |                                  |
-|                 | 7. <code>80 07 13 00 2c 2c 00 81 d9</code>           |                                  |
-| front defrost?? | off   <code>80 03 13 00 2c 2c 00 81 dd</code>        |                                  |
-|                 | on  <code>80 03 13 00 2c 2c 00 81 dd</code>          |                                  |
-| rear defrost    | off   <code>80 03 13 00 2c 2c 00 81 dd</code>        | >> 0x26 & 1                      |
-|                 | on  <code>80 03 13 40 2c 2c 00 81 9d</code>          |                                  |
-| eco             | off   <code>80 03 13 00 2c 2c 00 81 dd</code>        | >> 0x3b & 1                      |
-|                 | on  <code>88 03 13 00 2c 2c 00 81 d5</code>          |                                  |
-| mode            | face         <code>80 02 11 00 2c 2c 00 81 e0</code> | >> 0x28 & 7                      |
-|                 | both         <code>80 02 12 00 2c 2c 00 81 df</code> |                                  |
-|                 | feet         <code>80 02 13 00 2c 2c 00 81 de</code> |                                  |
-|                 | feet/defrost <code>80 02 14 00 2c 2c 00 81 dd</code> |                                  |
-| recycle         | off   <code>80 02 12 00 2c 2c 00 81 df</code>        |                                  |
-|                 | on  <code>80 02 22 00 2c 2c 00 81 cf</code>          |                                  |
-| s-mode          | off   <code>00 02 12 00 2c 2c 00 81 60</code>        |                                  |
-|                 | on  <code>80 02 12 00 2c 2c 00 81 df</code>          |                                  |
-| sync            | off   <code>00 02 12 00 2c 2c 00 81 60</code>        |                                  |
-|                 | on  <code>00 02 12 20 2c 2c 00 81 40</code>          |                                  |
-| a/c             | off   <code>00 02 12 00 2c 2c 00 80 61</code>        |                                  |
-|                 | on  <code>00 02 12 00 2c 2c 00 81 60</code>          |                                  |
-| illumination    | off   <code>00 06 14 00 35 36 00 81 47</code>        |                                  |
-|                 | on  <code>00 06 14 00 35 36 00 c1 07</code>          |                                  |
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Status</th>
+      <th>Frame</th>
+      <th>Bits (excluding checksum)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">power (fan bit)</td>
+      <td>off</td>
+      <td><code class="language-plaintext highlighter-rouge">80 00 22 00 38 38 00 80 <em>ba</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 48 &amp; 7</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code class="language-plaintext highlighter-rouge">80 23 13 00 2c 2c 00 81 <em>bd</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">auto</td>
+      <td>off</td>
+      <td><code>80 <strong>0</strong>3 13 00 2c 2c 00 81 <em>dd</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 53 &amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code>80 <strong>2</strong>3 13 00 2c 2c 00 81 <em>bd</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="7">fan</td>
+      <td>1</td>
+      <td><code>80 0<strong>1</strong> 13 00 2c 2c 00 81 <em>df</em></code></td>
+      <td rowspan="7"><code>&gt;&gt; 48 &amp; 7</code></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>80 0<strong>2</strong> 13 00 2c 2c 00 81 <em>de</em></code></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>80 0<strong>3</strong> 13 00 2c 2c 00 81 <em>dd</em></code></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>80 0<strong>4</strong> 13 00 2c 2c 00 81 <em>dc</em></code></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><code>80 0<strong>5</strong> 13 00 2c 2c 00 81 <em>db</em></code></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><code>80 0<strong>6</strong> 13 00 2c 2c 00 81 <em>da</em></code></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><code>80 0<strong>7</strong> 13 00 2c 2c 00 81 <em>d9</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="5">mode</td>
+      <td>face</td>
+      <td><code>80 02 1<strong>1</strong> 00 2c 2c 00 81 <em>e0</em></code></td>
+      <td rowspan="5"><code>&gt;&gt; 40 &amp; F</code></td>
+    </tr>
+    <tr>
+      <td>face/feet</td>
+      <td><code>80 02 1<strong>2</strong> 00 2c 2c 00 81 <em>df</em></code></td>
+    </tr>
+    <tr>
+      <td>feet</td>
+      <td><code>80 02 1<strong>3</strong> 00 2c 2c 00 81 <em>de</em></code></td>
+    </tr>
+    <tr>
+      <td>feet/defrost</td>
+      <td><code>80 02 1<strong>4</strong> 00 2c 2c 00 81 <em>dd</em></code></td>
+    </tr>
+    <tr>
+      <td>defrost</td>
+      <td><code>80 02 1<strong>9</strong> 00 2c 2c 00 81 <em>d8</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">rear defrost</td>
+      <td>off</td>
+      <td><code>80 03 13 <strong>0</strong>0 2c 2c 00 81 <em>dd</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 38 &amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code>80 03 13 <strong>4</strong>0 2c 2c 00 81 <em>9d</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">eco</td>
+      <td>off</td>
+      <td><code>8<strong>0</strong> 03 13 00 2c 2c 00 81 <em>dd</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 59 &amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code>8<strong>8</strong> 03 13 00 2c 2c 00 81 <em>d5</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">recycle</td>
+      <td>off</td>
+      <td><code>80 02 <strong>1</strong>2 00 2c 2c 00 81 <em>df</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 45 &amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code>80 02 <strong>2</strong>2 00 2c 2c 00 81 <em>cf</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">s-mode</td>
+      <td>off</td>
+      <td><code><strong>0</strong>0 02 12 00 2c 2c 00 81 <em>60</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 63 &amp; F</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code><strong>8</strong>0 02 12 00 2c 2c 00 81 <em>df</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">sync</td>
+      <td>off</td>
+      <td><code>00 02 12 <strong>0</strong>0 2c 2c 00 81 <em>60</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 37 &amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code>00 02 12 <strong>2</strong>0 2c 2c 00 81 <em>40</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">a/c</td>
+      <td>off</td>
+      <td><code>00 02 12 00 2c 2c 00 8<strong>0</strong> <em>61</em></code></td>
+      <td rowspan="2"><code>&amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on></td>
+      <td><code>00 02 12 00 2c 2c 00 8<strong>1</strong> <em>60</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">illumination</td>
+      <td>off</td>
+      <td><code>00 06 14 00 35 36 00 <strong>8</strong>1 <em>47</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 6 &amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code>00 06 14 00 35 36 00 <strong>c</strong>1 <em>07</em></code></td>
+    </tr>
+  </tbody>
+</table>
 
 #### Button Presses
 
@@ -144,5 +265,11 @@ For the most part, multiple buttons can be pressed simultaneously. There are two
 | recycle air         | <code>40 00 00 00 10 90 <strong>c</strong>0 00 <em>25</em></code> | <code>&#124; 00 00 00 00 00 00 <strong>c</strong>0 00</code> |
 | s-mode              | <code>40 00 <strong>8</strong>0 00 10 90 00 00 <em>65</em></code> | <code>&#124; 00 <strong>8</strong>0 00 00 00 00 00 00</code> |
 
+#### Everything Else
 
-#### Status Messages
+During my testing, `0x32`, `0xBA`, `0xF5`, and `0x78` messages never changed, so I'm not sure what they do. My car doesn't have the winter package, which includes the heated seats, heated steering wheel, and wiper defroster. Those messages may be related to those features and would be used on cars with those options.
+
+`0x76` is still a mystery, as it is continually requested by the master node and never receives a response. Remember how I mentioned some cars, like the newest generation Venza and Highlander with the 12 inch display, can control the climate system from the touchscreen? They might use CAN, or they might be connected to the climate LIN bus and respond to `0x76` requests. I tried responding to `0x76` requests with the same data as `0x39` and nothing happened. I also tried sending messages with 1 bit changed at a time (`0x0000000000000001`, `0x0000000000000002`, `0x0000000000000004` etc.) and observed no changes.
+
+### Next Steps
+
