@@ -7,9 +7,9 @@ tags:
   - hardware
   - personal projects
 image:
-  path: /assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/lin_connected_to_computer.jpg
-  width: 3024
-  height: 4032
+  path: /assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/panel.jpg
+  width: 1365
+  height: 617
 ---
 
 It's not a great feeling to walk out to your car in the morning and find that your windshield is completely covered in ice. Scraping it off is a pain, and it's even worse when you're in a hurry.
