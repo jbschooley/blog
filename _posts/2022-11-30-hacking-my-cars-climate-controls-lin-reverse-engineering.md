@@ -271,7 +271,7 @@ For the most part, multiple buttons can be pressed simultaneously. There are two
 | passenger temp down | <code>40 00 00 00 10 <strong>8f</strong> 00 00 <em>e6</em></code> | <code>- 00 00 00 00 00 0<strong>1</strong> 00 00</code>      |
 | passenger temp up   | <code>40 00 00 00 10 <strong>91</strong> 00 00 <em>e6</em></code> | <code>+ 00 00 00 00 00 0<strong>1</strong> 00 00</code>      |
 | sync                | <code>40 00 00 <strong>2</strong>0 10 90 00 00 <em>c5</em></code> | <code>&#124; 00 00 00 <strong>2</strong>0 00 00 00 00</code> |
-| a/c                 | <code>40 <strong>8</strong>0 00 00 10 90 00 00 <em>65</em></code> | <code>&#124; 00 <strong>8</strong>0 00 00 00 00 00 00</code> |
+| a/c                 | <code>40 <strong>8</strong>0 00 00 10 90 00 00 <em>65</em></code> | <code>&#124; <strong>8</strong>0 00 00 00 00 00 00 00</code> |
 | front defrost       | <code>40 00 00 <strong>8</strong>0 10 90 00 00 <em>65</em></code> | <code>&#124; 00 00 00 <strong>8</strong>0 00 00 00 00</code> |
 | rear defrost        | <code>40 00 00 <strong>4</strong>0 10 90 00 00 <em>a5</em></code> | <code>&#124; 00 00 00 <strong>4</strong>0 00 00 00 00</code> |
 | eco                 | <code>40 <strong>4</strong>0 00 00 10 90 00 00 <em>a5</em></code> | <code>&#124; 00 <strong>4</strong>0 00 00 00 00 00 00</code> |
