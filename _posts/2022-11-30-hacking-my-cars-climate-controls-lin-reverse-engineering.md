@@ -277,9 +277,9 @@ For the most part, multiple buttons can be pressed simultaneously. There are two
 | eco                 | <code>40 <strong>4</strong>0 00 00 10 90 00 00 <em>a5</em></code> | <code>&#124; 00 <strong>4</strong>0 00 00 00 00 00 00</code> |
 | fan down            | <code>40 <strong>3d</strong> 00 00 10 90 00 00 <em>a8</em></code> | <code>&#124; 00 <strong>3d</strong> 00 00 00 00 00 00</code> |
 | fan up              | <code>40 <strong>3c</strong> 00 00 10 90 00 00 <em>a9</em></code> | <code>&#124; 00 <strong>3c</strong> 00 00 00 00 00 00</code> |
-| mode                | <code>40 00 <strong>1c</strong> 00 10 90 00 00 <em>c9</em></code> | <code>&#124; 00 <strong>1c</strong> 00 00 00 00 00 00</code> |
+| mode                | <code>40 00 <strong>1c</strong> 00 10 90 00 00 <em>c9</em></code> | <code>&#124; 00 00 <strong>1c</strong> 00 00 00 00 00</code> |
 | recycle air         | <code>40 00 00 00 10 90 <strong>c</strong>0 00 <em>25</em></code> | <code>&#124; 00 00 00 00 00 00 <strong>c</strong>0 00</code> |
-| s-mode              | <code>40 00 <strong>8</strong>0 00 10 90 00 00 <em>65</em></code> | <code>&#124; 00 <strong>8</strong>0 00 00 00 00 00 00</code> |
+| s-mode              | <code>40 00 <strong>8</strong>0 00 10 90 00 00 <em>65</em></code> | <code>&#124; 00 00 <strong>8</strong>0 00 00 00 00 00</code> |
 
 #### Everything Else
 
