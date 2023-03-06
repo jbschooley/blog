@@ -78,6 +78,15 @@ Don't insert them back into the connectors yet. It's easier to solder them first
 
 #### Step 5: Solder everything together on the proto board
 
+The best way I found to set up the proto board is by soldering pins to it so that it takes up the 3rd click slot on the shield. This way, you can keep everything attached to the Arduino rather than having to find another place to mount the proto board.
+
+Some connections can be made without the board, but having a central connection area simplifies things a bit.
+
+You want to connect the following:
+
+- All grounds together, including the Arduino ground, both LIN grounds, and the car charger ground
+- All 5V together, including the Arduino 5V, both LIN 5V, and the car charger 5V
+
 	4. Solder everything together on the Proto board
 	5. Test every connection with your multimeter. Remember you’re dealing with your car is electrical system, which will not be cheap to repair if you fry something.
 	6. Flash the Arduino
