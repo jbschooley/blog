@@ -54,9 +54,11 @@ If you aren’t a soldering expert, you may want to use your multimeter to check
 
 #### Step 2: Solder jumpers on the LIN clicks
 
-The basic LIN click has a jumper for selecting Slave or Master mode. It comes with the Slave position selected. On one of your clicks, you will need to solder the jumper to the Master position. This click will be the one that will be sending the messages to the car. The other click will be the Slave click, and will be receiving the messages from the car. You can also remove the 3.3V jumper and solder it to the 5V position, but this is not necessary as the Arduino will output 3.3V for the clicks to use.
+The basic LIN click has a jumper for selecting Responder or Commander mode. It comes with the Responder position selected. On one of your clicks, you will need to solder the jumper to the Commander position. This click will be the one that will be sending the messages to the car. The other click will be the Responder click, and will be receiving the messages from the car. You can also remove the 3.3V jumper and solder it to the 5V position, but this is not necessary as the Arduino will output 3.3V for the clicks to use.
 
-If you get the ATA663254, you will need to solder the 5V jumper on both clicks and the L-PULL jumper on the click that will be used as the Master.
+If you get the ATA663254, you will need to solder the 5V jumper on both clicks and the L-PULL jumper on the click that will be used as the Commander.
+
+*Note: While the official terms for LIN device roles have been changed to Commander and Responder, most documentation, including the documentation for these LIN clicks, still uses the terms Master and Slave.*
 
 #### Step 3: Take apart your dollar store car charger
 
@@ -84,11 +86,47 @@ Some connections can be made without the board, but having a central connection 
 
 You want to connect the following:
 
-- All grounds together, including the Arduino ground, both LIN grounds, and the car charger ground
-- All 5V together, including the Arduino 5V, both LIN 5V, and the car charger 5V
+- All grounds, including the Arduino ground, both LIN grounds, the car charger ground, and ground from both connectors
+- All 12V, including the Arduino 12V, both LIN 12V, the car charger 12V, and 12V from both connectors
+- The car charger 5V to a 5V pin on the Arduino
 
-	4. Solder everything together on the Proto board
-	5. Test every connection with your multimeter. Remember you’re dealing with your car is electrical system, which will not be cheap to repair if you fry something.
-	6. Flash the Arduino
-	7. Plug it in and test it!
-Install it behind the dash. You may want to 3-D print a case for it doesn’t touch anything it’s not supposed to, and short itself out.
+The rest of the connections can be made directly, but connecting them through the proto board allows for cleaner wiring:
+
+- Illumination+ and Illumination- from both connectors (these are direct and do not pass through the Arduino)
+- LIN from the car connector to the Responder LIN click
+- LIN from the panel connector to the Commander LIN click
+
+#### Step 6: Test every connection with your multimeter
+
+Remember, you’re dealing with your car's electrical system. Electrical problems in cars, especially newer ones, can be very expensive to fix, so it's best to be safe. Make sure that you have continuity between all of your connections and that you have no shorts. If you have a short, you will need to find it and fix it before continuing.
+
+#### Step 7: Flash the Arduino
+
+Clone [jbschooley/ToyotaLinInterceptor](https://github.com/jbschooley/ToyotaLinInterceptor) and push it to your Arduino. I use IntelliJ IDEA with the PlatformIO plugin. You may be able to use another IDE, but I haven’t tried it.
+
+#### Step 8: Plug it in and test it!
+
+[Remove the climate control panel](https://www.youtube.com/watch?v=eL141juGyrM). Unplug it from the car and attach the interceptor between the panel and the car. Plug it back in and turn the car on. If everything is working, you should see the panel light up and the climate control buttons should work. By default, there won't be a preset configured, so hold down the S-Mode button for a second, then turn the driver's temperature knob to the right to set a preset.
+
+If everything works, install it behind the dash. You may want to [3D print a case](https://github.com/jbschooley/ToyotaLinInterceptor/tree/main/Case) so it doesn’t touch anything it’s not supposed to and short itself out. This case *barely* fits behind the dash, and it was a pain to get it in, but it does fit.
+
+### Software
+
+The software is written in C++ and uses the [Arduino framework](https://www.arduino.cc/). I've tried to keep things as simple as possible and keep things modular so that it's easy to add new features. You'll notice that all code is kept in .h files. No, this isn't best practice, but it made development a bit easier and the difference in compile time by keeping implementation code in .cpp files was negligible.
+
+- `Button.h` - handles state for a button on the climate control panel and triggers actions on press, hold, and release
+  - `Menu.h` - holding the S-Mode button will replace the driver's temperature display with a preset menu. Turning the driver's temperature knob will cycle between presets, and the preset will be saved when the button is released. Presets are displayed as L1, L2, etc. on the display. (Why L#? Because I had to pick from the text the panel was configured to display, and I figured those were the least likely to be seen during normal operation. I think the car can display up to L32.) If new presets are added, increment the `numPresets` constant.
+  - `Toggle.h` - holding the Eco button will toggle the preset on and off. The display will toggle between the preset number and `OFF` when the button is held. (I don't want it always cranking the heat to high when I'm running errands, so I turn it off for that and turn it back on when I park for the night or know it'll be snowing. I might be able to eliminate this if I can figure out a way to detect when the remote starter is used.)
+  - `OffButton.h` - turns off the rear defroster when the Off button is pressed.
+- `LINController.h` - handles low-level sending and receiving messages on the LIN bus. The same code can be used for reading messages as both the Commander and Responder. `sendFrame` is used for sending data as the Master, `sendRequest` is used to request data from the Responder, and `sendResponse` is used for responding to messages as the Responder.
+- `Handler.h` - handles state for reading and writing messages on the LIN bus and ensures received messages are validated before being processed.
+  - `CarHandler.h` - handles reading, forwarding, and responding to messages from the car
+  - `PanelHandler.h` - handles sending data and requests and responding to messages from the panel
+- `DataStore.h` - stores data received from the car and the panel and handles reading and writing to EEPROM
+- `Modifier.h` - used to modify intercepted data before it's forwarded. This includes modifying temperature, fan speed, and buttons pressed.
+- `Preset.h` - defines how a preset is applied
+  - `PresetMaxDefrost.h` - turns on front and rear defrosters, sets fan speed to high, sets temperature to max, and turns off eco mode and S-Mode
+- `PresetController.h` - handles applying the correct presets. This is where you can add new presets.
+- `Timer.h` - a debug timer that can be used to measure how long it takes to process a message. It's not used in the final code, but it's useful for debugging.
+
+I've tried my best to keep things organized, but my code is definitely not perfect. I'm open to suggestions and pull requests.
