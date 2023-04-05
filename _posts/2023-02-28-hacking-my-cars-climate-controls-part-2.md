@@ -102,7 +102,7 @@ Remember, you’re dealing with your car's electrical system. Electrical problem
 
 #### Step 7: Flash the Arduino
 
-Clone [jbschooley/ToyotaLinInterceptor](https://github.com/jbschooley/ToyotaLinInterceptor) and push it to your Arduino. I use IntelliJ IDEA with the PlatformIO plugin. You may be able to use another IDE, but I haven’t tried it.
+Clone [jbschooley/ToyotaLinInterceptor](https://github.com/jbschooley/ToyotaLinInterceptor) and push it to your Arduino. I use CLion with the [PlatformIO](https://docs.platformio.org/en/latest/integration/ide/clion.html#installation) plugin. You may be able to use another IDE, but I haven’t tried it.
 
 #### Step 8: Plug it in and test it!
 
@@ -118,7 +118,7 @@ The software is written in C++ and uses the [Arduino framework](https://www.ardu
   - `Menu.h` - holding the S-Mode button will replace the driver's temperature display with a preset menu. Turning the driver's temperature knob will cycle between presets, and the preset will be saved when the button is released. Presets are displayed as L1, L2, etc. on the display. (Why L#? Because I had to pick from the text the panel was configured to display, and I figured those were the least likely to be seen during normal operation. I think the car can display up to L32.) If new presets are added, increment the `numPresets` constant.
   - `Toggle.h` - holding the Eco button will toggle the preset on and off. The display will toggle between the preset number and `OFF` when the button is held. (I don't want it always cranking the heat to high when I'm running errands, so I turn it off for that and turn it back on when I park for the night or know it'll be snowing. I might be able to eliminate this if I can figure out a way to detect when the remote starter is used.)
   - `OffButton.h` - turns off the rear defroster when the Off button is pressed.
-- `LINController.h` - handles low-level sending and receiving messages on the LIN bus. The same code can be used for reading messages as both the Commander and Responder. `sendFrame` is used for sending data as the Master, `sendRequest` is used to request data from the Responder, and `sendResponse` is used for responding to messages as the Responder.
+- `LINController.h` - handles low-level sending and receiving messages on the LIN bus
 - `Handler.h` - handles state for reading and writing messages on the LIN bus and ensures received messages are validated before being processed.
   - `CarHandler.h` - handles reading, forwarding, and responding to messages from the car
   - `PanelHandler.h` - handles sending data and requests and responding to messages from the panel
@@ -128,5 +128,8 @@ The software is written in C++ and uses the [Arduino framework](https://www.ardu
   - `PresetMaxDefrost.h` - turns on front and rear defrosters, sets fan speed to high, sets temperature to max, and turns off eco mode and S-Mode
 - `PresetController.h` - handles applying the correct presets. This is where you can add new presets.
 - `Timer.h` - a debug timer that can be used to measure how long it takes to process a message. It's not used in the final code, but it's useful for debugging.
+- `Logger.h` - a debug logger that can be used to log messages to the USB serial port. Loggers are disabled unless necessary for debugging because log output is incredibly slow and causes the Arduino to miss messages on the LIN bus.
 
 I've tried my best to keep things organized, but my code is definitely not perfect. I'm open to suggestions and pull requests.
+
+More detailed documentation can be found in the [source code](https://github.com/jbschooley/ToyotaLinInterceptor).
