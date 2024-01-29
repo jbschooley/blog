@@ -134,3 +134,10 @@ Next, add a `config` directory to the root of your project. Create two files, `e
 ```
 npm i lodash @types/lodash
 ```
+
+---------------
+
+* add AmplifyStack
+* setup bin/your-app-name.ts
+* add amplify templates from amplify/#current-cloud-backend/awscloudformation/build
+* add cfn import to amplify-stack.ts
