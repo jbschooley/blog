@@ -144,12 +144,15 @@ npm i lodash @types/lodash
 
 * add AmplifyStack
 * setup bin/your-app-name.ts
-* add amplify templates from amplify/#current-cloud-backend/awscloudformation/build
+* add amplify templates from amplify/#current-cloud-backend/awscloudformation
 * add cfn import to amplify-stack.ts
 * rebuild resources one at a time, verifying that the generated templates match
   * remove resource with `this.removeCfnResource('resourceId')`
   * L1 (Cfn) resources use given id
   * L2 resources add a hash to the id, so use `this.overrideId(resource, 'id')` to set the id
   * remove outputs with `this.removeCfnOutput('outputId')`
+  * can ignore resources that will remain stable (auth, amplify hosting) but need to rebuild nested stacks or links will be messed up when switching branches
+  * sometimes things like description won't match what's in cfn. Amplify will occasionally update the description in the templates it generates, but cfn sometimes doesn't update the description when the resource is updated. However, there is a bug which causes a description provided in CDK to be prepended to the template's description. The only way around this is to change the description in the cfn template, then set it in CDK so it will be included once the cfn template is no longer imported. Depending on when you created each branch, this will result in inconsistencies in diffs, so pay attention to that and make sure only the description is different. After all branches are moved over, adding a tag to the root stack will force cfn to update or remove descriptions on all nested stacks.
+  * taking over a stack will cause an update to TemplateURL in the parent stack, which will show in the diff. This is expected and can be ignored.
 * use feature flags to test deployment step by step
 * cannot set parameters for root stack, but existing parameters won't change, just plan on eventually removing them, and if you need to create a new stack with cdk you'll have to specify them in the cdk command
