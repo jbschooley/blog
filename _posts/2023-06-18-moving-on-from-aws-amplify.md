@@ -142,11 +142,35 @@ npm i lodash @types/lodash
 
 ---------------
 
-* add AmplifyStack
+* add AmplifyStack and other amplify constructs to lib/amplify
+  * passes config variables down to nested stacks
+  * `doCfnInclude` easily enable and disable importing of cfn templates
+  * `cfnFileName` to specify the name of the cfn file to import
+  * `description` adds a description to the generated template, but only if `doCfnInclude` is false, to keep description from showing up in diff after cfn is no longer imported
+  * `overrideId` set the id of an L2 construct
+  * `removeCfnResource` remove a resource from the imported template so it can be rebuilt in CDK
+  * `removeCfnOutput` remove an output from the imported template so it can be rebuilt in CDK
+  * `addCfnDependency` add a dependency directly to the cfn resource inside an L2 construct
 * setup bin/your-app-name.ts
 * add amplify templates from amplify/#current-cloud-backend/awscloudformation
+  * clone and pull from amplify to a separate directory to be sure you have the latest templates
 * add cfn import to amplify-stack.ts
+* ![img.png](img.png)
+* this is safe to push, amplify won't overwrite it
 * rebuild resources one at a time, verifying that the generated templates match
+  * order
+    * deployment bucket
+    * authrole
+    * unauthrole
+    * auth stack
+      * copy parameters
+      * all params need to be strings; does not change diff
+    * update roles with idp stuff
+  * tips
+    * accessing variables from env.json and branches.json
+    * getAtt `cdk.Fn.getAtt('AuthRole', 'Arn').toString()` or L1 construct `authRole.getAtt('Arn').toString()`
+    * ref `cdk.Fn.ref('AuthRole')` or L1 construct `authRole.ref`
+    * Stack.cfnStack to access cloudfomation stack
   * remove resource with `this.removeCfnResource('resourceId')`
   * L1 (Cfn) resources use given id
   * L2 resources add a hash to the id, so use `this.overrideId(resource, 'id')` to set the id
