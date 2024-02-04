@@ -52,7 +52,7 @@ LIN is a serial bus that uses a single wire to carry data. It is different from 
 | White        | White       | Ground       |
 | Blue         | Blue        | Illumination |
 
-Because LIN is much newer than CAN, well-documented hardware is scarce and open-source utilities for sniffing and intercepting traffic are practically nonexistent. I decided to start by reverse engineering the LIN data transmitted between the control panel and the climate control unit. This was a lot easier than I expected. A [LIN bus transciever with a TJA1020 chip](https://www.amazon.com/dp/B0895WQ5VM) converts LIN data to TTL serial data, which can be read by a [USB-to-UART adapter](https://www.amazon.com/dp/B00LODGRV8. I ordered one and connected it to my computer, with the LIN terminal connected to the bus alongside both the car and the panel. (It's a mess, but a functional mess.)
+Because LIN is much newer than CAN, well-documented hardware is scarce and open-source utilities for sniffing and intercepting traffic are practically nonexistent. I decided to start by reverse engineering the LIN data transmitted between the control panel and the climate control unit. This was a lot easier than I expected. A [LIN bus transciever with a TJA1020 chip](https://www.amazon.com/dp/B0895WQ5VM) converts LIN data to TTL serial data, which can be read by a [USB-to-UART adapter](https://www.amazon.com/dp/B00LODGRV8). I ordered one and connected it to my computer, with the LIN terminal connected to the bus alongside both the car and the panel. (It's a mess, but a functional mess.)
 
 ![LIN bus connected to computer](/assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/lin_connected_to_computer.jpg)
 
