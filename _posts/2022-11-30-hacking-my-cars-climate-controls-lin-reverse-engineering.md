@@ -320,6 +320,8 @@ def respond():
       b = ser.read()
       if b.hex() == '39':
         ser.write(increase_fan_speed + calculate_checksum(0x39, increase_fan_speed))
+
+respond()
 ```
 
 Running this script will tell the car that the fan up button is being held down, causing the fan speed to increase. However, the control panel must be unplugged from the car for this to work. If the control panel is plugged in, both nodes will be transmitting responses at the same time, resulting in a collision. The car sees this as invalid data and ignores it.
