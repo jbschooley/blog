@@ -157,6 +157,24 @@ Frames with the ID `0xB1` contain the current status of the climate system.
       <td><code>80 0<strong>7</strong> 13 00 2c 2c 00 81 <em>d9</em></code></td>
     </tr>
     <tr>
+      <td rowspan="4">temperature</td>
+      <td>Low (<code>0x00</code>)</td>
+      <td><code>80 01 13 00 <strong>00 00</strong> 00 81 <em>38</em></code></td>
+      <td rowspan="4"><code>&gt;&gt; 24 &amp; FF</code> (driver)<br /><code>&gt;&gt; 16 &amp; FF</code> (passenger)</td>
+    </tr>
+    <tr>
+      <td>60 - 64 °F (<code>0x66</code> - <code>0x6a</code>)</td>
+      <td><code>80 01 13 00 <strong>68 68</strong> 00 81 <em>67</em></code></td>
+    </tr>
+    <tr>
+      <td>65 - 85 °F (<code>0x22</code> - <code>0x36</code>)</td>
+      <td><code>80 01 13 00 <strong>29 34</strong> 00 81 <em>da</em></code></td>
+    </tr>
+    <tr>
+      <td>High (<code>0x37</code>)</td>
+      <td><code>80 01 13 00 <strong>37 37</strong> 00 81 <em>c9</em></code></td>
+    </tr>
+    <tr>
       <td rowspan="5">mode</td>
       <td>face</td>
       <td><code>80 02 1<strong>1</strong> 00 2c 2c 00 81 <em>e0</em></code></td>
