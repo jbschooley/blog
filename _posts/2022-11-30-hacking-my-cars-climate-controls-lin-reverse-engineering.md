@@ -107,30 +107,14 @@ Frames with the ID `0xB1` contain the current status of the climate system.
   </thead>
   <tbody>
     <tr>
-      <td rowspan="2">power (fan bit)</td>
+      <td rowspan="8">fan/power</td>
       <td>off</td>
-      <td><code class="language-plaintext highlighter-rouge">80 00 22 00 38 38 00 80 <em>ba</em></code></td>
-      <td rowspan="2"><code>&gt;&gt; 48 &amp; 7</code></td>
+      <td><code>80 0<strong>0</strong> 13 00 2c 2c 00 81 <em>e0</em></code></td>
+      <td rowspan="8"><code>&gt;&gt; 48 &amp; 7</code></td>
     </tr>
     <tr>
-      <td>on</td>
-      <td><code class="language-plaintext highlighter-rouge">80 23 13 00 2c 2c 00 81 <em>bd</em></code></td>
-    </tr>
-    <tr>
-      <td rowspan="2">auto</td>
-      <td>off</td>
-      <td><code>80 <strong>0</strong>3 13 00 2c 2c 00 81 <em>dd</em></code></td>
-      <td rowspan="2"><code>&gt;&gt; 53 &amp; 1</code></td>
-    </tr>
-    <tr>
-      <td>on</td>
-      <td><code>80 <strong>2</strong>3 13 00 2c 2c 00 81 <em>bd</em></code></td>
-    </tr>
-    <tr>
-      <td rowspan="7">fan</td>
       <td>1</td>
       <td><code>80 0<strong>1</strong> 13 00 2c 2c 00 81 <em>df</em></code></td>
-      <td rowspan="7"><code>&gt;&gt; 48 &amp; 7</code></td>
     </tr>
     <tr>
       <td>2</td>
@@ -173,6 +157,16 @@ Frames with the ID `0xB1` contain the current status of the climate system.
     <tr>
       <td>High (<code>0x37</code>)</td>
       <td><code>80 01 13 00 <strong>37 37</strong> 00 81 <em>c9</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">auto</td>
+      <td>off</td>
+      <td><code>80 <strong>0</strong>3 13 00 2c 2c 00 81 <em>dd</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 53 &amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code>80 <strong>2</strong>3 13 00 2c 2c 00 81 <em>bd</em></code></td>
     </tr>
     <tr>
       <td rowspan="5">mode</td>
