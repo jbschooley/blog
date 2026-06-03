@@ -52,7 +52,7 @@ LIN is a serial bus that uses a single wire to carry data. It is different from 
 | White        | White       | Ground       |
 | Blue         | Blue        | Illumination |
 
-Because LIN is much newer than CAN, well-documented hardware is scarce and open-source utilities for sniffing and intercepting traffic are practically nonexistent. I decided to start by reverse engineering the LIN data transmitted between the control panel and the climate control unit. This was a lot easier than I expected. A [LIN bus transciever with a TJA1020 chip](https://www.amazon.com/dp/B0895WQ5VM) converts LIN data to TTL serial data, which can be read by a [USB-to-UART adapter](https://www.amazon.com/dp/B00LODGRV8. I ordered one and connected it to my computer, with the LIN terminal connected to the bus alongside both the car and the panel. (It's a mess, but a functional mess.)
+Because LIN is much newer than CAN, well-documented hardware is scarce and open-source utilities for sniffing and intercepting traffic are practically nonexistent. I decided to start by reverse engineering the LIN data transmitted between the control panel and the climate control unit. This was a lot easier than I expected. A [LIN bus transciever with a TJA1020 chip](https://www.amazon.com/dp/B0895WQ5VM) converts LIN data to TTL serial data, which can be read by a [USB-to-UART adapter](https://www.amazon.com/dp/B00LODGRV8). I ordered one and connected it to my computer, with the LIN terminal connected to the bus alongside both the car and the panel. (It's a mess, but a functional mess.)
 
 ![LIN bus connected to computer](/assets/images/2022-11-30-hacking-my-cars-climate-controls-lin-reverse-engineering/lin_connected_to_computer.jpg)
 
@@ -107,30 +107,14 @@ Frames with the ID `0xB1` contain the current status of the climate system.
   </thead>
   <tbody>
     <tr>
-      <td rowspan="2">power (fan bit)</td>
+      <td rowspan="8">fan/power</td>
       <td>off</td>
-      <td><code class="language-plaintext highlighter-rouge">80 00 22 00 38 38 00 80 <em>ba</em></code></td>
-      <td rowspan="2"><code>&gt;&gt; 48 &amp; 7</code></td>
+      <td><code>80 0<strong>0</strong> 13 00 2c 2c 00 81 <em>e0</em></code></td>
+      <td rowspan="8"><code>&gt;&gt; 48 &amp; 7</code></td>
     </tr>
     <tr>
-      <td>on</td>
-      <td><code class="language-plaintext highlighter-rouge">80 23 13 00 2c 2c 00 81 <em>bd</em></code></td>
-    </tr>
-    <tr>
-      <td rowspan="2">auto</td>
-      <td>off</td>
-      <td><code>80 <strong>0</strong>3 13 00 2c 2c 00 81 <em>dd</em></code></td>
-      <td rowspan="2"><code>&gt;&gt; 53 &amp; 1</code></td>
-    </tr>
-    <tr>
-      <td>on</td>
-      <td><code>80 <strong>2</strong>3 13 00 2c 2c 00 81 <em>bd</em></code></td>
-    </tr>
-    <tr>
-      <td rowspan="7">fan</td>
       <td>1</td>
       <td><code>80 0<strong>1</strong> 13 00 2c 2c 00 81 <em>df</em></code></td>
-      <td rowspan="7"><code>&gt;&gt; 48 &amp; 7</code></td>
     </tr>
     <tr>
       <td>2</td>
@@ -155,6 +139,34 @@ Frames with the ID `0xB1` contain the current status of the climate system.
     <tr>
       <td>7</td>
       <td><code>80 0<strong>7</strong> 13 00 2c 2c 00 81 <em>d9</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="4">temperature</td>
+      <td>Low (<code>0x00</code>)</td>
+      <td><code>80 01 13 00 <strong>00 00</strong> 00 81 <em>38</em></code></td>
+      <td rowspan="4"><code>&gt;&gt; 24 &amp; FF</code> (driver)<br /><code>&gt;&gt; 16 &amp; FF</code> (passenger)</td>
+    </tr>
+    <tr>
+      <td>60 - 64 °F (<code>0x66</code> - <code>0x6a</code>)</td>
+      <td><code>80 01 13 00 <strong>68 68</strong> 00 81 <em>67</em></code></td>
+    </tr>
+    <tr>
+      <td>65 - 85 °F (<code>0x22</code> - <code>0x36</code>)</td>
+      <td><code>80 01 13 00 <strong>29 34</strong> 00 81 <em>da</em></code></td>
+    </tr>
+    <tr>
+      <td>High (<code>0x37</code>)</td>
+      <td><code>80 01 13 00 <strong>37 37</strong> 00 81 <em>c9</em></code></td>
+    </tr>
+    <tr>
+      <td rowspan="2">auto</td>
+      <td>off</td>
+      <td><code>80 <strong>0</strong>3 13 00 2c 2c 00 81 <em>dd</em></code></td>
+      <td rowspan="2"><code>&gt;&gt; 53 &amp; 1</code></td>
+    </tr>
+    <tr>
+      <td>on</td>
+      <td><code>80 <strong>2</strong>3 13 00 2c 2c 00 81 <em>bd</em></code></td>
     </tr>
     <tr>
       <td rowspan="5">mode</td>
@@ -320,6 +332,8 @@ def respond():
       b = ser.read()
       if b.hex() == '39':
         ser.write(increase_fan_speed + calculate_checksum(0x39, increase_fan_speed))
+
+respond()
 ```
 
 Running this script will tell the car that the fan up button is being held down, causing the fan speed to increase. However, the control panel must be unplugged from the car for this to work. If the control panel is plugged in, both nodes will be transmitting responses at the same time, resulting in a collision. The car sees this as invalid data and ignores it.
